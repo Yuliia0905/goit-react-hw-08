@@ -1,8 +1,10 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsOps";
+
 import css from "./ContactForm.module.css";
+import { addContact } from "../../redux/contacts/operations";
+import toast from "react-hot-toast";
 
 const phoneRegExp = /^[\d-]+$/;
 const ContactsValidationSchema = Yup.object().shape({
@@ -24,7 +26,11 @@ const ContactForm = () => {
         name: values.name.trim(),
         number: values.number.trim(),
       })
-    );
+    )
+      .unwrap()
+      .then(() => {
+        toast.success("Contact added successfully🎉");
+      });
     resetForm();
   };
 

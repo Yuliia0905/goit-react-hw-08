@@ -1,19 +1,24 @@
-import axios from "axios";
+import Axios from "axios";
 
-axios.defaults.baseURL =
-  "https://66d068a6181d059277de7cbc.mockapi.io/api/v1/contacts";
+export const axios = Axios.create({
+  baseURL: "https://connections-api.goit.global/",
+});
+
+export const setAuthHeaders = (token) => {
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
 
 export const getContacts = async () => {
-  const { data } = await axios.get();
+  const { data } = await axios.get("contacts");
   return data;
 };
 
 export const apiAddContact = async (contact) => {
-  const { data } = await axios.post("", contact);
+  const { data } = await axios.post("contacts", contact);
   return data;
 };
 
 export const apiDeleteContact = async (contactId) => {
-  const { data } = await axios.delete(`/${contactId}`);
+  const { data } = await axios.delete(`/contacts/${contactId}`);
   return data;
 };

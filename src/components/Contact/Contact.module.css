@@ -4,6 +4,7 @@
   border-radius: 5px;
   position: relative;
   min-width: 300px;
+  background-color: white;
 }
 .name {
   font-weight: bold;
@@ -13,12 +14,12 @@
 }
 
 .delBtn {
-  padding: 8px;
+  padding: 3px;
   border: 1px solid red;
   background-color: rgb(228, 139, 154);
   border-radius: 4px;
   position: absolute;
-  top: 15px;
+  top: 20px;
   right: 10px;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
   display: grid;

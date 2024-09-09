@@ -5,6 +5,7 @@
   max-width: 300px;
   margin-bottom: 30px;
   margin: 15px auto;
+  padding-top: 80px;
 }
 .label {
   display: flex;
@@ -17,15 +18,19 @@
   background-color: none;
   border: 1px solid;
   outline: none;
-  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-width 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .input:hover {
-  border-color: rgb(243, 163, 243);
+  border-color: purple;
+}
+.input:focus {
+  border-width: 2px;
 }
 
-.button {
-  padding: 7px;
+.submitBtn {
+  padding: 10px;
   background-color: rgb(94, 62, 153);
   color: white;
   border-radius: 8px;
@@ -36,7 +41,7 @@
   margin: 0 auto;
 }
 
-.button:hover {
+.submitBtn:hover {
   background-color: rgb(117, 91, 167);
 }
 

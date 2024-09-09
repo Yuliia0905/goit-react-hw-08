@@ -1,14 +1,15 @@
 .search {
   padding: 10px;
   width: 100%;
-  border: 2px solid green;
+  border: 2px solid;
   max-width: 300px;
   margin-bottom: 30px;
   outline: none;
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .search:hover {
-  background-color: rgb(213, 243, 213);
+  border-color: rgb(243, 163, 243);
 }
 .wrapper {
   display: flex;

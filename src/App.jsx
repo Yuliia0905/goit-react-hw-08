@@ -1,38 +1,52 @@
-import { RiContactsBook2Fill } from "react-icons/ri";
-import { useEffect } from "react";
-import { fetchContacts } from "./redux/contactsOps";
-import { useDispatch, useSelector } from "react-redux";
-import { selectError, selectLoading } from "./redux/contactsSlice";
+import { lazy, Suspense, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-import ContactForm from "./components/ContactForm/ContactForm";
-import SearchBox from "./components/SearchBox/SearchBox";
-import ContactList from "./components/ContactList/ContactList";
+import { Route, Routes } from "react-router-dom";
+
 import Loader from "./components/Loader/Loader";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 
-import "./App.css";
+const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
+const ContactsPage = lazy(() => import("./pages/ContactsPage/ContactsPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
+const RegistrationPage = lazy(() =>
+  import("./pages/RegistrationPage/RegistrationPage")
+);
+
+import css from "./App.module.css";
+import { apiRefreshUser } from "./redux/auth/operations";
+import Layout from "./components/Layout/Layout";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import RestrictedRoute from "./components/RestrictedRoute/RestrictedRoute";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 
 function App() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectLoading);
-  const error = useSelector(selectError);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(apiRefreshUser());
   }, [dispatch]);
 
   return (
-    <div className="container">
-      <h1 className="mainTitle">
-        Phonebook <RiContactsBook2Fill />
-      </h1>
-      <ContactForm />
-      <SearchBox />
-      {isLoading && <Loader />}
-      {error && (
-        <ErrorMessage message="Failed to load contacts. Please try again later." />
-      )}
-      <ContactList />
+    <div className={css.background}>
+      <Layout>
+        <Suspense fallback={<Loader />} errorElement={<ErrorMessage />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/register"
+              element={<RestrictedRoute component={<RegistrationPage />} />}
+            />
+            <Route
+              path="/login"
+              element={<RestrictedRoute component={<LoginPage />} />}
+            />
+            <Route
+              path="/contacts"
+              element={<PrivateRoute component={<ContactsPage />} />}
+            />
+          </Routes>
+        </Suspense>
+      </Layout>
     </div>
   );
 }
