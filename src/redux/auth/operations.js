@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axios, setAuthHeaders } from "../../services/contactsApi";
 
-
 export const apiLogin = createAsyncThunk(
   "auth/login",
   async (formData, thunkApi) => {
@@ -35,7 +34,7 @@ export const apiLogout = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       await axios.post("users/logout");
-
+      setAuthHeaders(null);
       return;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -51,7 +50,7 @@ export const apiRefreshUser = createAsyncThunk(
       const token = state.auth.token;
       setAuthHeaders(token);
       const { data } = await axios.get("users/current");
-      // console.log("data: ", data);
+
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
